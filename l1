@@ -1,0 +1,37 @@
+wsl --install -d kali-linux
+wsl -d kali-linux
+
+nano file.sh
+
+#code 
+echo " Starting DevOps Workflow Simulation..."
+build() {
+  echo "[Build] Compiling source code..."
+  sleep 2
+  echo "[Build] Build successful!"
+}
+test() {
+  echo " [Test] Running unit tests..."
+  sleep 2
+  TEST_RESULT=$((RANDOM % 2))
+  if [ $TEST_RESULT -eq 0 ]; then
+    echo " [Test] All tests passed!"
+  else
+    echo " [Test] Some tests failed!"
+    exit 1
+  fi
+}
+deploy() {
+  echo " [Deploy] Deploying application to staging..."
+  sleep 2
+  echo " [Deploy] Deployment successful!"
+}
+build
+test
+deploy
+echo " DevOps Workflow Completed Successfully!"
+
+chmod +x one.sh i
+./file.sh
+or
+sh /mnt/c/WINDOWS/system32/file.sh
