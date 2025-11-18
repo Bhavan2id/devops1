@@ -1,0 +1,89 @@
+DevOps lab 7  
+At first download the docker desktop  and install it 
+https://docs.docker.com/desktop/setup/install/windows-install/
+                                                                                                                   step1:                                                                                                                                 docker-web-app/
+├── index.html
+└── Dockerfile                                                                                                                                                                                                                                                     step2
+
+index.html                                                                                                                                       <!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Docker Web App</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #cce7ff;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+      margin: 0;
+      text-align: center;
+      color: #0d47a1;
+    }
+
+    h1 {
+      font-size: 3rem;
+      color: #1565c0;
+      margin-bottom: 20px;
+    }
+
+    p {
+      font-size: 1.2rem;
+      color: #0d47a1;
+      margin-bottom: 30px;
+    }
+
+    a.button {
+      display: inline-block;
+      padding: 12px 25px;
+      font-size: 1rem;
+      color: #fff;
+      background-color: #1e88e5;
+      text-decoration: none;
+      border-radius: 8px;
+      transition: 0.3s;
+    }
+
+    a.button:hover {
+      background-color: #0d47a1;
+    }
+  </style>
+</head>
+<body>
+  <h1>🚀 Welcome to Adhiyamaan College of Engineering!</h1>
+  <p>Department of MCA</p>
+  <a href="#" class="button">Explore</a>
+</body>
+</html>
+Docker file:                 
+            # Use the lightweight Nginx image as the base
+FROM nginx:alpine
+
+# Set working directory (optional, for clarity)
+WORKDIR /usr/share/nginx/html
+
+# Remove default Nginx content
+RUN rm -rf /usr/share/nginx/html/*
+
+# Copy your updated HTML file into Nginx's public folder
+COPY index.html /usr/share/nginx/html/index.html
+
+# Expose port 80 to the host
+EXPOSE 80
+
+# Start Nginx in the foreground
+CMD ["nginx", "-g", "daemon off;"]
+step3:                                                                                                                               cd C:\docker-web-app
+step4:
+docker build -t adhiyamaan-web-app .docker build -t adhiyamaan-web-app .
+step5:
+docker run -d -p 9090:80 adhiyamaan-web-app
+step6: 
+
+
+Open your browser and go to:
+http://localhost:9090
