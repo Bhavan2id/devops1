@@ -1,0 +1,185 @@
+FULL LAB EXERCISE — FROM ZERO TO RESULTS
+
+PHASE 1 — Create Maven Project (Local System)
+ Step 1 — Create project folder
+D:
+mvn archetype:generate -DgroupId=com.example.app -DartifactId=Ex9Devops -DarchetypeArtifactId=maven-archetype-quickstart -DinteractiveMode=false
+Step 2 — Create the needed directories inside
+src/main/java/com/example/app/
+src/test/java/com/example/app/
+ Step 3 — Create App.java file
+Location:
+D:\Ex9Devops\src\main\java\com\example\app\App.java
+Content:
+package com.example.app;
+
+public class App {
+    public static void main(String[] args) {
+        System.out.println("Hello World!");
+    }
+}
+
+PHASE 2 — Create pom.xml (Runnable JAR)
+Create this file inside:
+D:\Ex9Devops\pom.xml
+Paste this (final corrected pom.xml):
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0
+         https://maven.apache.org/xsd/maven-4.0.0.xsd">
+
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>com.example.app</groupId>
+    <artifactId>demo-app</artifactId>
+    <version>1.0-SNAPSHOT</version>
+
+    <properties>
+        <maven.compiler.source>8</maven.compiler.source>
+        <maven.compiler.target>8</maven.compiler.target>
+    </properties>
+
+    <dependencies>
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <version>4.13.2</version>
+            <scope>test</scope>
+        </dependency>
+    </dependencies>
+
+    <build>
+        <plugins>
+            <!-- Makes JAR executable -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-jar-plugin</artifactId>
+                <version>3.2.0</version>
+                <configuration>
+                    <archive>
+                        <manifest>
+                            <mainClass>com.example.app.App</mainClass>
+                        </manifest>
+                    </archive>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+
+</project>
+
+✅ PHASE 3 — Build the Project Locally
+Open CMD:
+cd D:\Ex9Devops
+mvn clean package
+A JAR will be created:
+target/demo-app-1.0-SNAPSHOT.jar
+✅ This verifies your code builds successfully.
+
+✅ PHASE 4 — Push Code to GitHub
+In CMD:
+cd D:\Ex9Devops
+
+git init
+git config --global --add safe.directory D:/Ex9Devops
+
+git add .
+git commit -m "Initial project with runnable jar"
+
+git branch -M main
+
+git remote add origin https://github.com/<yourname>/demo-app.git
+
+git push -u origin main
+✅ Code is now on GitHub.
+
+✅ PHASE 5 — Create Jenkins Pipeline Job
+Step 1 — Open Jenkins
+
+http://localhost:your -port number
+Step 2 — Create a new job
+✔ Click New Item
+✔ Name: Maven-Pipeline-Demo
+✔ Select: Pipeline
+✔ Click OK
+
+✅ PHASE 6 — Add Jenkins Pipeline Script
+Scroll down to Pipeline → Pipeline Script
+Paste this final working Jenkinsfile:
+pipeline {
+    agent any
+
+    tools {
+        maven "maven-3.9.11"
+        jdk "jdk-17"
+    }
+
+    stages {
+
+        stage('Checkout Code') {
+            steps {
+                git branch: 'main',
+                    url: 'https://github.com/<yourname>/demo-app.git'
+            }
+        }
+
+        stage('Build') {
+            steps {
+                bat "mvn clean compile"
+            }
+        }
+
+        stage('Test') {
+            steps {
+                bat "mvn test"
+            }
+        }
+
+        stage('Package') {
+            steps {
+                bat "mvn package"
+            }
+        }
+    }
+
+    post {
+        always {
+            archiveArtifacts artifacts: 'target/*.jar', fingerprint: true
+        }
+        success {
+            echo "✅ Pipeline Success!"
+        }
+        failure {
+            echo "❌ Pipeline Failed!"
+        }
+    }
+}
+✅ Replace <yourname> with your GitHub username.
+Click Save.
+
+✅ PHASE 7 — Run the Pipeline
+Click:
+✅ Build Now
+You will see all stages:
+✅ Checkout Code
+✅ Build
+✅ Test
+✅ Package
+✅ Artifact Saved
+✅ Build Success!
+
+✅ PHASE 8 — Download the Output JAR (Method 3)
+On the left:
+✅ Click Build # → Artifacts
+✅ Download:
+demo-app-1.0-SNAPSHOT.jar
+
+✅ PHASE 9 — Run the JAR and See Output
+Open CMD:
+cd D:\Downloads
+java -jar demo-app-1.0-SNAPSHOT.jar
+You will see the output:
+Hello World!
+
+✅✅ LAB COMPLETED SUCCESSFULLY ✅✅
+If you want, I can also prepare a PDF report for your lab submission.
