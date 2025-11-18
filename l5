@@ -1,0 +1,113 @@
+Devops 5
+🛠️ 1. Tools You Need to Install
+Tool	Purpose	Download Link
+
+Maven	  Build tool to create .jar	            https://maven.apache.org/download.cgi
+
+IDE 
+	To write Java code	VS Code 
+
+💻 2. Setup Environment
+Check Java installation:
+java -version
+javac -version
+mvn –version
+
+Step 2: Download Maven
+1.Go to official Apache Maven download page:
+👉 https://maven.apache.org/download.cgi
+2.Download: Binary Zip Archive (e.g., apache-maven-3.x.x-bin.zip)
+3.Extract the zip file to any location, e.g.:
+C:\apache-maven-3.9.9 (or similar)
+
+Step 3: Set Environment Variables (Windows)
+1. Open Environment Variables:
+Press Windows Key + R → type sysdm.cpl → Enter
+Go to Advanced tab → click Environment Variables...
+2. Add MAVEN_HOME:
+Under System variables → New
+Variable Name: MAVEN_HOME
+Variable Value: C:\apache-maven-3.9.9
+3. Add Maven bin folder to PATH:
+In System Variables, select Path → click Edit → New
+C:\apache-maven-3.9.9\bin
+4.Click OK → OK → OK to save and close.
+
+1.Open Command Prompt.
+2.Go to the folder where you want your project:
+3.D:
+4.cd D:\  (or any folder you want)
+5.Run this exact command (single line):
+mvn archetype:generate -DgroupId=com.example.app -DartifactId=demo-app -DarchetypeArtifactId=maven-archetype-quickstart -DinteractiveMode=false
+4.Maven will download dependencies (first time may take a few minutes).
+5.You’ll see the folder created:
+D:\demo-app
+This creates:
+my-demo-app/
+ ├── pom.xml
+ └── src
+     ├── main
+     │   └── java/com/example/app/App.java
+     └── test
+         └── java/com/example/app/AppTest.java
+Option B: Create manually
+Create folders and a pom.xml file manually if needed.
+
+ 2. pom.xml Configuration
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>com.example.app</groupId>
+    <artifactId>demo-app</artifactId>
+    <version>1.0-SNAPSHOT</version>
+    <packaging>jar</packaging>
+
+    <name>demo-app</name>
+    <url>http://maven.apache.org</url>
+
+    <dependencies>
+        <!-- JUnit for testing -->
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <version>4.13.2</version>
+            <scope>test</scope>
+        </dependency>
+    </dependencies>
+
+    <build>
+        <plugins>
+            <!-- Plugin to add Main-Class in manifest -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-jar-plugin</artifactId>
+                <version>3.2.2</version>
+                <configuration>
+                    <archive>
+                        <manifest>
+                            <!-- Change this to your actual main class path if different -->
+                            <mainClass>com.example.app.App</mainClass>
+                        </manifest>
+                    </archive>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+
+</project>
+
+
+ 3. Build & Generate .jar File
+Navigate to your project directory:
+cd demo-app
+mvn clean package
+After a successful build, your JAR file will be in:
+target/my-java-app-1.0.0.jar
+To run it:
+Cd demo-app/target
+java -jar target/my-java-app-1.0.0.jar
+java -jar demo-app-1.0-SNAPSHOT.jar
+
