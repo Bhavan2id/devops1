@@ -1,0 +1,71 @@
+EX6
+
+1 Install and verify your tools
+You only need two things:
+java -version     # should print Java 11 or later
+gradle -v         # should print a Gradle version
+If either command isn’t found:
+Java: install from https://adoptium.net
+Gradle: install from https://gradle.org/install/ and add <gradle-home>\bin to PATH.
+
+2. Create a New Gradle Java Project
+You can do this using command prompt or manually.
+Using Gradle command
+gradle init --type java-application
+
+Write a Custom build.gradle Script
+Create a file named build.gradle in the project root:
+plugins {
+    id 'java'
+    id 'application'
+}
+
+group = 'com.example'
+version = '1.0-SNAPSHOT'
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    testImplementation 'junit:junit:4.13.2'
+}
+
+application {
+    // Set your main class here
+    mainClass = 'com.example.App'
+}
+
+tasks.register('helloTask') {
+    doLast {
+        println ' Custom Gradle Task is running!'
+    }
+}
+
+tasks.jar {
+    manifest {
+        attributes(
+            'Main-Class': 'com.example.App'
+        )
+    }
+}
+
+
+5. Build the Project
+In Command Prompt/Terminal:
+Navigate your project
+gradle build
+You'll see:
+BUILD SUCCESSFUL
+JAR file will be located in:
+build/libs/gradle-demo-1.0-SNAPSHOT.jar
+
+ 6. Run the Application
+Option A: Using Gradle (Recommended)
+gradle run
+
+
+7. Run Custom Task Created in Script
+gradle helloTask
+Output:
+ Custom Gradle Task is running!
