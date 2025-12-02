@@ -59,25 +59,18 @@ index.html                                                                      
   <a href="#" class="button">Explore</a>
 </body>
 </html>
+
 Docker file:                 
-            # Use the lightweight Nginx image as the base
 FROM nginx:alpine
-
-# Set working directory (optional, for clarity)
 WORKDIR /usr/share/nginx/html
-
-# Remove default Nginx content
 RUN rm -rf /usr/share/nginx/html/*
-
-# Copy your updated HTML file into Nginx's public folder
 COPY index.html /usr/share/nginx/html/index.html
-
-# Expose port 80 to the host
 EXPOSE 80
-
-# Start Nginx in the foreground
 CMD ["nginx", "-g", "daemon off;"]
-step3:                                                                                                                               cd C:\docker-web-app
+
+
+step3:    
+cd C:\docker-web-app
 step4:
 docker build -t adhiyamaan-web-app .docker build -t adhiyamaan-web-app .
 step5:
