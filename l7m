@@ -1,0 +1,60 @@
+Project Structure
+docker-web-app/
+├── server.js
+├── package.json
+└── Dockerfile
+
+// server.js
+const express = require("express");
+const app = express();
+const PORT = 3000;
+
+// Example endpoint
+app.get("/", (req, res) => {
+  res.json({ message: " Welcome to Adhiyamaan College of Engineering - MCA Department!" });
+});
+
+// Another sample endpoint
+app.get("/api/info", (req, res) => {
+  res.json({
+    college: "Adhiyamaan College of Engineering",
+    department: "MCA",
+    status: "Microservice running successfully"
+  });
+});
+
+app.listen(PORT, () => {
+  console.log(`Node.js microservice running on http://localhost:${PORT}`);
+});
+
+
+Step 2: package.json
+Minimal dependencies:
+{
+  "name": "adhiyamaan-web-app",
+  "version": "1.0.0",
+  "main": "server.js",
+  "dependencies": {
+    "express": "^4.18.2"
+  }
+}
+
+
+Step 3: Dockerfile
+
+FROM node:18-alpine
+WORKDIR /app
+COPY package*.json ./
+COPY server.js ./
+RUN npm install
+EXPOSE 80
+CMD ["node", "server.js"]
+
+
+Step 4: Build
+cd C:\docker-web-app
+docker build -t adhiyamaan-web-app-node .
+docker run -d -p 9090:80 adhiyamaan-web-app-node
+
+http://localhost:9090/
+http://localhost:9090/api/info
