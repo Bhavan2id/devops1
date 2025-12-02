@@ -54,7 +54,7 @@ CMD ["node", "server.js"]
 Step 4: Build
 cd C:\docker-web-app
 docker build -t adhiyamaan-web-app-node .
-docker run -d -p 9090:80 adhiyamaan-web-app-node
+docker run -d -p 3000 adhiyamaan-web-app-node
 
-http://localhost:9090/
-http://localhost:9090/api/info
+http://localhost:3000/
+http://localhost:3000/api/info
